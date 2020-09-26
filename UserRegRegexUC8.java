@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UserRegRegexUC7 {
+public class UserRegRegexUC8 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter the First Name");
@@ -53,9 +53,9 @@ public class UserRegRegexUC7 {
 	
 	System.out.println("Enter the Password");
 	String password = sc.next();
-	String pattern_password = "(?=.*[0-9])(?=.*[A-Z])[\\s]{8,}";
+	String pattern_password = "^(?=.*[!@#$%^&*|'<>.-^*()%!])(?=.*[0-9])(?=.*[A-Z])[^\\s]{8,}$";
 	if(Pattern.matches(pattern_password,password))
-		 System.out.println("Valid Passwordr");
+		 System.out.println("Valid Password");
 	
 	else
 		System.out.println("Invalid Password");
