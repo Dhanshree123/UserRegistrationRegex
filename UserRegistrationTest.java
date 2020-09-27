@@ -1,47 +1,66 @@
 package GradleUserRegistration;
 
+import org.junit.Before;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import org.hamcrest.CoreMatchers;
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+import org.junit.runner.RunWith;
 
 
+@RunWith(Parameterized.class)
 public class UserRegistrationTest {
+	  private String email;
+	  private boolean validateEmail;
 	
-	@Test
-	public void testFirstName(){
-		UserRegistration user_obj = new UserRegistration();
-		assertThat(user_obj.firstName("Anne"), CoreMatchers.is("Valid First Name"));
-		assertThat(user_obj.firstName("anne"), CoreMatchers.is("Invalid First Name"));
-		assertThat(user_obj.firstName("123Anne"), CoreMatchers.is("Invalid First Name"));
-		
-	}
+	 public UserRegistrationTest(String email,boolean validateEmail){
+		  
+		  this.email=email;
+		  this.validateEmail=validateEmail;
+	  }
+	 
+	 
+	   @Parameterized.Parameters
+	   public static Collection input() {
+		   return Arrays.asList(new Object[][]{
+			   {"abc@yahoo.com", true },
+		         {"abc-100@yahoo.com",true},
+		         {"abc-100@yahoo.com",true},
+		         {"abc.100@yahoo.com",true},
+		         {"abc111@abc.com",true},
+		         { "abc-100@abc.net",true},
+		         {"abc.100@abc.com.au",true},
+		         {"abc@1.com,",true},
+		         {"abc@gmail.com.com",true},
+		         {"abc+100@gmail.com",true},
+		         {"abc",false},
+		         {"abc@.com.my",false},
+		         {"abc123@gmail.a",false},
+		         {"abc123@.com",false},
+		         {"abc123@.com.com",false},
+		         {".abc@abc.com",false},
+		         {"abc()*@gmail.com",false},
+		         {"abc@%*.com",false},
+		         {"abc..2002@gmail.com",false},
+		         {"abc.@gmail.com",false},
+		         {"abc@abc@gmail.com",false},
+		         {"abc@gmail.com.1a",false},
+		         {"abc@gmail.com.aa.au",false}
+			   
+			   });
+		   
+	   }
 	
-    @Test 
-    public void testLastName(){
-    	UserRegistration user_obj = new UserRegistration();
-    	assertThat(user_obj.lastName("Morgan"),CoreMatchers.is("Valid Last Name"));
-    	assertThat(user_obj.lastName("mmmorgan"),CoreMatchers.is("Invalid Last Name"));
-	}
-    
      @Test 
      public void testEmail(){
     	 UserRegistration user_obj = new UserRegistration();
-    	 assertThat(user_obj.email("Emma@abc.com"),CoreMatchers.is("Valid Email"));
-    	 
-    	 assertThat(user_obj.email(".D@qwe.vom"),CoreMatchers.is("Invalid Email"));
+    	 assertEquals(user_obj.email(email),validateEmail);
     }
-     @Test 
-     public void testMob_num(){
-    	 UserRegistration user_obj = new UserRegistration();
-    	 assertThat(user_obj.mob_num("91 9876543210"),CoreMatchers.is("Valid Mobile Number"));
-    	 assertThat(user_obj.mob_num("9876543210"),CoreMatchers.is("Invalid Mobile Number"));
-     }
-     @Test 
-     public void testPassword(){
-    	 UserRegistration user_obj = new UserRegistration();
-    	 assertThat(user_obj.password("Emma@1234"),CoreMatchers.is("Valid Password"));
-    	 assertThat(user_obj.password("mmmm*&^^1234"),CoreMatchers.is("Invalid Password"));
-     }
+
 	
 }
